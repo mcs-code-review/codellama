@@ -4,7 +4,6 @@
 from typing import Optional
 
 import fire
-
 from llama import Llama
 
 
@@ -45,7 +44,7 @@ def main(
             {
                 "role": "user",
                 "content": "Write a function that computes the set of sums of all contiguous sublists of a given list.",
-            }
+            },
         ],
     ]
     results = generator.chat_completion(
