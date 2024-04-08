@@ -57,13 +57,7 @@ echo "Loaded modules:"
 echo "$(module list)"
 
 # The job command(s):
-source ~/venvs/deepseekcoder/bin/activate
-
-# python example_instructions.py \
-#     --ckpt_dir ./ckpt/CodeLlama-7b-Instruct \
-#     --tokenizer_path ./ckpt/CodeLlama-7b-Instruct \
-#     --temperature 0.0 --top_p 0.95 \
-#     --max_seq_len 512 --max_batch_size 8
+source ~/venvs/codellama/bin/activate
 
 torchrun --nproc_per_node 1 code_review_instructions.py \
     --ckpt_dir ./ckpt/CodeLlama-7b-Instruct/ \
