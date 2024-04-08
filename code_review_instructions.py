@@ -123,58 +123,39 @@ def main(
         max_batch_size=max_batch_size,
     )
 
-    instructions = [
-        [
-            {
-                "role": "user",
-                "content": "In Bash, how do I list all text files in the current directory (excluding subdirectories) that have been modified in the last month?",
-            }
-        ],
-        [
-            {
-                "role": "user",
-                "content": "What is the difference between inorder and preorder traversal? Give an example in Python.",
-            }
-        ],
-        [
-            {
-                "role": "system",
-                "content": "Provide answers in JavaScript",
-            },
-            {
-                "role": "user",
-                "content": "Write a function that computes the set of sums of all contiguous sublists of a given list.",
-            },
-        ],
-    ]
-
-    results = generator.chat_completion(
-        dialogs=instructions,
-        temperature=temperature,
-        top_p=top_p,
-        max_gen_len=max_gen_len,
-    )
-
-    for instruction, result in zip(instructions, results):
-        for msg in instruction:
-            print(f"{msg['role'].capitalize()}: {msg['content']}\n")
-        print(
-            f"> {result['generation']['role'].capitalize()}: {result['generation']['content']}"
-        )
-        print("\n==================================\n")
-
     def make_dialog(user_prompt):
-        instructions = [
+        return [
             {"role": "system", "content": cfg.system_prompt},
             {"role": "user", "content": user_prompt},
         ]
-        return instructions
 
     df = get_user_prompts(cfg.in_path)
     prompts = df.user_prompt.apply(make_dialog)
 
     if debug:
         print(f"Prompts: {len(df.index)}")
+
+    results = generator.chat_completion(
+        dialogs=prompts,
+        temperature=temperature,
+        top_p=top_p,
+        max_gen_len=max_gen_len,
+    )
+
+    answers = [result["generation"]["content"] for result in results]
+    df["codellama_answer"] = answers
+    df["codellama_code"] = df.codellama_answer.apply(extract_code_diff)
+
+    (
+        df["codellama_em"],
+        df["codellama_em_trim"],
+        df["codellama_bleu"],
+        df["codellama_bleu_trim"],
+    ) = zip(
+        *df.apply(
+            lambda row: evaluate_code_diff(row["new"], row["codellama_code"]), axis=1
+        )
+    )
 
     output_path = save_output(cfg, df)
     print(f"Output saved to {output_path}")
