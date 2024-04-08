@@ -66,7 +66,7 @@ torchrun --nproc_per_node 1 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 512 \
-    --max_batch_size 100 \
+    --max_batch_size 20 \
     --debug True
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##

@@ -1,4 +1,5 @@
 import json
+import math
 import os
 import re
 from typing import Optional
@@ -7,8 +8,8 @@ import fire
 import pandas as pd
 import torch
 from evaluation import myeval
-from tqdm import tqdm
 from llama import Llama
+from tqdm import tqdm
 
 
 class Config:
@@ -94,6 +95,19 @@ def save_output(cfg, df):
     return output_path
 
 
+def split_dataframe(df, chunk_size=1000):
+    """
+    Splits the DataFrame into smaller chunks
+    df: a Dataframe, chunkSize: the chunk size
+    return a list of DataFrames
+    """
+    chunks = list()
+    num_chunks = math.ceil(len(df) / chunk_size)
+    for i in range(num_chunks):
+        chunks.append(df[i * chunk_size : (i + 1) * chunk_size])
+    return chunks
+
+
 ################################################# Main #################################################
 def main(
     ckpt_dir: str,
@@ -130,34 +144,45 @@ def main(
         ]
 
     df = get_user_prompts(cfg.in_path)
-    prompts = df.user_prompt.apply(make_dialog)
+    proccessed_df = pd.DataFrame()
 
-    if debug:
-        print(f"Prompts: {len(df.index)}")
+    for chunk in tqdm(
+        split_dataframe(df, chunk_size=max_batch_size), desc="Processing"
+    ):
+        prompts = chunk.user_prompt.apply(make_dialog)
 
-    results = generator.chat_completion(
-        dialogs=prompts,
-        temperature=temperature,
-        top_p=top_p,
-        max_gen_len=max_gen_len,
-    )
+        if debug:
+            print(f"Prompts: {len(df.index)}")
 
-    answers = [result["generation"]["content"] for result in results]
-    df["codellama_answer"] = answers
-    df["codellama_code"] = df.codellama_answer.apply(extract_code_diff)
-
-    (
-        df["codellama_em"],
-        df["codellama_em_trim"],
-        df["codellama_bleu"],
-        df["codellama_bleu_trim"],
-    ) = zip(
-        *df.apply(
-            lambda row: evaluate_code_diff(row["new"], row["codellama_code"]), axis=1
+        results = generator.chat_completion(
+            dialogs=prompts,
+            temperature=temperature,
+            top_p=top_p,
+            max_gen_len=max_gen_len,
         )
-    )
 
-    output_path = save_output(cfg, df)
+        answers = [result["generation"]["content"] for result in results]
+        proccessed = pd.DataFrame(answers, columns=["codellama_answer"])
+        proccessed = pd.concat([chunk.reset_index(drop=True), proccessed], axis=1)
+        proccessed["codellama_code"] = proccessed.codellama_answer.apply(
+            extract_code_diff
+        )
+
+        (
+            proccessed["codellama_em"],
+            proccessed["codellama_em_trim"],
+            proccessed["codellama_bleu"],
+            proccessed["codellama_bleu_trim"],
+        ) = zip(
+            *proccessed.apply(
+                lambda row: evaluate_code_diff(row["new"], row["codellama_code"]),
+                axis=1,
+            )
+        )
+
+        proccessed_df = pd.concat([proccessed_df, proccessed])
+
+    output_path = save_output(cfg, proccessed_df)
     print(f"Output saved to {output_path}")
 
 
