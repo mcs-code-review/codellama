@@ -176,31 +176,6 @@ def main(
     if debug:
         print(f"Prompts: {len(df.index)}")
 
-    sampling_params.stop = [tokenizer.eos_token]
-    outputs = llm.generate(prompts, sampling_params)
-
-    answers = [output.outputs[0].text for output in outputs]
-
-    df["deepseek_answer"] = answers
-    df["deepseek_code"] = df.deepseek_answer.apply(extract_code_diff)
-
-    (
-        df["deepseek_em"],
-        df["deepseek_em_trim"],
-        df["deepseek_bleu"],
-        df["deepseek_bleu_trim"],
-    ) = zip(
-        *df.apply(
-            lambda row: evaluate_code_diff(row["new"], row["deepseek_code"]), axis=1
-        )
-    )
-
-    if debug:
-        for output in outputs[:5]:
-            prompt = output.prompt
-            generated_text = output.outputs[0].text
-            print(f"Prompt: {prompt!r}, Generated text: {generated_text!r}")
-
     output_path = save_output(cfg, df)
     print(f"Output saved to {output_path}")
 

@@ -62,10 +62,12 @@ source ~/venvs/codellama/bin/activate
 torchrun --nproc_per_node 1 code_review_instructions.py \
     --ckpt_dir ./ckpt/CodeLlama-7b-Instruct/ \
     --tokenizer_path ./ckpt/CodeLlama-7b-Instruct/tokenizer.model \
+    --conf_path ../config/codellama-test.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 512 \
-    --max_batch_size 4
+    --max_batch_size 4 \
+    --debug True
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
 ##Job monitor command to list the resource usage
