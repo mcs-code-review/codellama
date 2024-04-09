@@ -1,4 +1,5 @@
 import json
+import math
 import os
 import re
 from typing import Optional
@@ -7,8 +8,8 @@ import fire
 import pandas as pd
 import torch
 from evaluation import myeval
-from tqdm import tqdm
 from llama import Llama
+from tqdm import tqdm
 
 
 class Config:
@@ -94,6 +95,19 @@ def save_output(cfg, df):
     return output_path
 
 
+def split_dataframe(df, chunk_size=4):
+    """
+    Splits the DataFrame into smaller chunks
+    df: a Dataframe, chunkSize: the chunk size
+    return a list of DataFrames
+    """
+    chunks = list()
+    num_chunks = math.ceil(len(df) / chunk_size)
+    for i in range(num_chunks):
+        chunks.append(df[i * chunk_size : (i + 1) * chunk_size])
+    return chunks
+
+
 ################################################# Main #################################################
 def main(
     ckpt_dir: str,
@@ -102,7 +116,7 @@ def main(
     temperature: float = 0.0,
     top_p: float = 0.95,
     max_seq_len: int = 2048,
-    max_batch_size: int = 8,
+    max_batch_size: int = 4,
     max_gen_len: int = None,
     debug: bool = False,
 ):
@@ -129,12 +143,14 @@ def main(
         print(f"Prompts: {len(df.index)}")
 
     outputs = []
-    for user_prompt in tqdm(df.user_prompt, total=len(df.index), desc="Prompting"):
+    chunks = split_dataframe(df.user_prompt, chunk_size=max_batch_size)
+    for chunk in tqdm(chunks, total=len(chunks), desc="Prompting"):
         instructions = [
             [
                 {"role": "system", "content": cfg.system_prompt},
                 {"role": "user", "content": user_prompt},
-            ],
+            ]
+            for user_prompt in chunk
         ]
 
         results = generator.chat_completion(
@@ -144,9 +160,10 @@ def main(
             max_gen_len=max_gen_len,
         )
 
-        answer = results[0]["generation"]["content"]
-        code = extract_code_diff(answer)
-        outputs.append([answer, code])
+        for result in results:
+            answer = result["generation"]["content"]
+            code = extract_code_diff(answer)
+            outputs.append([answer, code])
 
     processed_df = pd.DataFrame(outputs, columns=["codellama_answer", "codellama_code"])
     df = pd.concat([df, processed_df], axis=1)

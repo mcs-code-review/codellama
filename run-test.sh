@@ -1,6 +1,7 @@
 #!/bin/bash
 # Partition for the job:
-#SBATCH --partition=gpu-a100-short
+##SBATCH --partition=gpu-a100-short
+#SBATCH --partition=deeplearn
 
 # Multithreaded (SMP) job: must run on one node 
 #SBATCH --nodes=1
@@ -18,7 +19,7 @@
 # Number of GPUs requested per node:
 #SBATCH --gres=gpu:1
 # Slurm QoS:
-##SBATCH --qos=gpgpudeeplearn
+#SBATCH --qos=gpgpudeeplearn
 ##SBATCH --constraint=dlg5
 
 # Requested memory per node:
@@ -66,7 +67,7 @@ torchrun --nproc_per_node 1 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 2048 \
-    --max_batch_size 8 \
+    --max_batch_size 4 \
     --debug True
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
