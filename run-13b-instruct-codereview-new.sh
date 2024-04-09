@@ -19,7 +19,7 @@
 #SBATCH --gres=gpu:2
 # Slurm QoS:
 #SBATCH --qos=gpgpudeeplearn
-#SBATCH --constraint=dlg5
+##SBATCH --constraint=dlg5
 
 # Requested memory per node:
 ## SBATCH --mem=64G
@@ -35,7 +35,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=1-00:0:00
+#SBATCH --time=15:0:00
 
 # Standard output and error log
 #SBATCH -o logs/13b-instruct-codereview-new.log

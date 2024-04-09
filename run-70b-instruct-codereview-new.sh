@@ -3,7 +3,7 @@
 #SBATCH --partition=deeplearn
 
 # Multithreaded (SMP) job: must run on one node 
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 
 # The name of the job:
 #SBATCH --job-name="70b-instruct-codereview-new"
@@ -12,17 +12,17 @@
 #SBATCH --account="punim2247"
 
 # Maximum number of tasks/CPU cores used by the job:
-#SBATCH --ntasks=1
+#SBATCH --ntasks=2
 #SBATCH --cpus-per-task=8
 
 # Number of GPUs requested per node:
-#SBATCH --gres=gpu:8
+#SBATCH --gres=gpu:4
 # Slurm QoS:
 #SBATCH --qos=gpgpudeeplearn
-##SBATCH --constraint=dlg5
+#SBATCH --constraint=dlg5
 
 # Requested memory per node:
-##SBATCH --mem=100G
+#SBATCH --mem=100G
 
 # Use this email address:
 #SBATCH --mail-user=mukhammad.karimov@student.unimelb.edu.au
@@ -35,7 +35,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=4:00:00
+#SBATCH --time=40:00:00:00
 
 # Standard output and error log
 #SBATCH -o logs/70b-instruct-codereview-new.log

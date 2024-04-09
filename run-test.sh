@@ -1,7 +1,7 @@
 #!/bin/bash
 # Partition for the job:
 ##SBATCH --partition=gpu-a100-short
-#SBATCH --partition=deeplearn
+#SBATCH --partition=gpu-a100
 
 # Multithreaded (SMP) job: must run on one node 
 #SBATCH --nodes=1
@@ -19,7 +19,7 @@
 # Number of GPUs requested per node:
 #SBATCH --gres=gpu:2
 # Slurm QoS:
-#SBATCH --qos=gpgpudeeplearn
+##SBATCH --qos=gpgpudeeplearn
 ##SBATCH --constraint=dlg5
 
 # Requested memory per node:
@@ -66,7 +66,7 @@ python3 -m torch.distributed.launch --nproc_per_node 2 code_review_instructions.
     --conf_path ../config/codellama-test.json \
     --temperature 0.0 \
     --top_p 0.95 \
-    --max_seq_len 2048 \
+    --max_seq_len 4096 \
     --max_batch_size 4 \
     --debug True
 
