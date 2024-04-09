@@ -123,29 +123,33 @@ def main(
         max_batch_size=max_batch_size,
     )
 
-    def make_dialog(user_prompt):
-        return [
-            {"role": "system", "content": cfg.system_prompt},
-            {"role": "user", "content": user_prompt},
-        ]
-
     df = get_user_prompts(cfg.in_path)
-    prompts = df.user_prompt.apply(make_dialog)
 
     if debug:
         print(f"Prompts: {len(df.index)}")
 
-    results = generator.chat_completion(
-        dialogs=prompts,
-        temperature=temperature,
-        top_p=top_p,
-        max_gen_len=max_gen_len,
-    )
+    outputs = []
+    for user_prompt in tqdm(df.user_prompt, total=len(df.index), desc="Prompting"):
+        instructions = [
+            [
+                {"role": "system", "content": cfg.system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+        ]
 
-    answers = [result["generation"]["content"] for result in results]
-    df["codellama_answer"] = answers
-    df["codellama_code"] = df.codellama_answer.apply(extract_code_diff)
+        results = generator.chat_completion(
+            dialogs=instructions,
+            temperature=temperature,
+            top_p=top_p,
+            max_gen_len=max_gen_len,
+        )
 
+        answer = results[0]["generation"]["content"]
+        code = extract_code_diff(answer)
+        outputs.append([answer, code])
+
+    processed_df = pd.DataFrame(outputs, columns=["codellama_answer", "codellama_code"])
+    df = pd.concat([df, processed_df], axis=1)
     (
         df["codellama_em"],
         df["codellama_em_trim"],
@@ -153,7 +157,8 @@ def main(
         df["codellama_bleu_trim"],
     ) = zip(
         *df.apply(
-            lambda row: evaluate_code_diff(row["new"], row["codellama_code"]), axis=1
+            lambda row: evaluate_code_diff(row["new"], row["codellama_code"]),
+            axis=1,
         )
     )
 
