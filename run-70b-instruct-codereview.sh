@@ -6,7 +6,7 @@
 #SBATCH --nodes=1
 
 # The name of the job:
-#SBATCH --job-name="13b-instruct-codereview-new"
+#SBATCH --job-name="70b-instruct-codereview"
 
 # The project ID which this job should run under:
 #SBATCH --account="punim2247"
@@ -16,13 +16,13 @@
 #SBATCH --cpus-per-task=8
 
 # Number of GPUs requested per node:
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:8
 # Slurm QoS:
 #SBATCH --qos=gpgpudeeplearn
 #SBATCH --constraint=dlg5
 
 # Requested memory per node:
-## SBATCH --mem=64G
+##SBATCH --mem=100G
 
 # Use this email address:
 #SBATCH --mail-user=mukhammad.karimov@student.unimelb.edu.au
@@ -35,10 +35,10 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=1-00:0:00
+#SBATCH --time=04:00:00
 
 # Standard output and error log
-#SBATCH -o logs/13b-instruct-codereview-new.log
+#SBATCH -o logs/70b-instruct-codereview.log
 
 # Run the job from the directory where it was launched (default)
 
@@ -59,13 +59,13 @@ echo "$(module list)"
 # The job command(s):
 source ~/venvs/codellama/bin/activate
 
-torchrun --nproc_per_node 2 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
-    --conf_path ../config/codellama-13b-instruct-codereview-new.json \
+torchrun --nproc_per_node 8 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-70b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-70b-Instruct/tokenizer.model \
+    --conf_path ../config/codellama-70b-instruct-codereview.json \
     --temperature 0.0 \
     --top_p 0.95 \
-    --max_seq_len 2048 \
+    --max_seq_len 4096 \
     --max_batch_size 10 \
     --debug True
 

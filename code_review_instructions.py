@@ -11,6 +11,9 @@ from evaluation import myeval
 from llama import Llama
 from tqdm import tqdm
 
+local_rank = int(os.environ.get("LOCAL_RANK", 0))  # Defaults to 0 if not set
+torch.cuda.set_device(local_rank)
+
 
 class Config:
     def __init__(self, conf_path):

@@ -17,7 +17,7 @@
 #SBATCH --cpus-per-task=8
 
 # Number of GPUs requested per node:
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:2
 # Slurm QoS:
 #SBATCH --qos=gpgpudeeplearn
 ##SBATCH --constraint=dlg5
@@ -60,15 +60,25 @@ echo "$(module list)"
 # The job command(s):
 source ~/venvs/codellama/bin/activate
 
-torchrun --nproc_per_node 1 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-7b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-7b-Instruct/tokenizer.model \
+python3 -m torch.distributed.launch --nproc_per_node 2 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
     --conf_path ../config/codellama-test.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 2048 \
     --max_batch_size 4 \
     --debug True
+
+# torchrun --nproc_per_node 2 example_completion.py \
+#     --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
+#     --max_seq_len 256 --max_batch_size 4
+
+# torchrun --nproc_per_node 2 example_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
+#     --max_seq_len 512 --max_batch_size 4
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
 ##Job monitor command to list the resource usage
