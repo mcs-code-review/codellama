@@ -35,7 +35,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=0-5:0:00
+#SBATCH --time=1-00:0:00
 
 # Standard output and error log
 #SBATCH -o logs/7b-instruct-codereview-new.log
@@ -65,7 +65,8 @@ torchrun --nproc_per_node 1 code_review_instructions.py \
     --conf_path ../config/codellama-7b-instruct-codereview-new.json \
     --temperature 0.0 \
     --top_p 0.95 \
-    --max_seq_len 512 \
+    --max_seq_len 2048 \
+    --max_gen_len 1024 \
     --max_batch_size 10 \
     --debug True
 

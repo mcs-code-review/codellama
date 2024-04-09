@@ -6,7 +6,7 @@
 #SBATCH --nodes=1
 
 # The name of the job:
-#SBATCH --job-name="7b-instruct-codereview"
+#SBATCH --job-name="13b-instruct-codereview"
 
 # The project ID which this job should run under:
 #SBATCH --account="punim2247"
@@ -38,7 +38,7 @@
 #SBATCH --time=1-00:0:00
 
 # Standard output and error log
-#SBATCH -o logs/7b-instruct-codereview.log
+#SBATCH -o logs/13b-instruct-codereview.log
 
 # Run the job from the directory where it was launched (default)
 
@@ -60,9 +60,9 @@ echo "$(module list)"
 source ~/venvs/codellama/bin/activate
 
 torchrun --nproc_per_node 1 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-7b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-7b-Instruct/tokenizer.model \
-    --conf_path ../config/codellama-7b-instruct-codereview.json \
+    --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
+    --conf_path ../config/codellama-13b-instruct-codereview.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 2048 \
