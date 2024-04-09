@@ -65,8 +65,8 @@ torchrun --nproc_per_node 1 code_review_instructions.py \
     --conf_path ../config/codellama-test.json \
     --temperature 0.0 \
     --top_p 0.95 \
-    --max_seq_len 512 \
-    --max_batch_size 20 \
+    --max_seq_len 2048 \
+    --max_batch_size 8 \
     --debug True
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
