@@ -3,16 +3,16 @@
 #SBATCH --partition=deeplearn
 
 # Multithreaded (SMP) job: must run on one node 
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 
 # The name of the job:
-#SBATCH --job-name="70b-instruct-codereview"
+#SBATCH --job-name="34b-instruct-codereview-new"
 
 # The project ID which this job should run under:
 #SBATCH --account="punim2247"
 
 # Maximum number of tasks/CPU cores used by the job:
-#SBATCH --ntasks=2
+#SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 
 # Number of GPUs requested per node:
@@ -35,10 +35,10 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=40:00:00
+#SBATCH --time=24:0:00
 
 # Standard output and error log
-#SBATCH -o logs/70b-instruct-codereview.log
+#SBATCH -o logs/34b-instruct-codereview-new.log
 
 # Run the job from the directory where it was launched (default)
 
@@ -59,10 +59,10 @@ echo "$(module list)"
 # The job command(s):
 source ~/venvs/codellama/bin/activate
 
-torchrun --nproc_per_node 8 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-70b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-70b-Instruct/tokenizer.model \
-    --conf_path ../config/codellama-70b-instruct-codereview.json \
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/codellama-34b-instruct-codereview.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 4096 \
