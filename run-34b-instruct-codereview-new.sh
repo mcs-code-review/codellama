@@ -62,7 +62,7 @@ source ~/venvs/codellama/bin/activate
 torchrun --nproc_per_node 4 code_review_instructions.py \
     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/codellama-34b-instruct-codereview.json \
+    --conf_path ../config/codellama-34b-instruct-codereview-new.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 4096 \
