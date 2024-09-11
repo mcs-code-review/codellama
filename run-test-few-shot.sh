@@ -1,12 +1,14 @@
 #!/bin/bash
 # Partition for the job:
+##SBATCH --partition=gpu-a100-short
+##SBATCH --partition=gpu-a100
 #SBATCH --partition=deeplearn
 
 # Multithreaded (SMP) job: must run on one node 
 #SBATCH --nodes=1
 
 # The name of the job:
-#SBATCH --job-name="test-few-shot-codereview"
+#SBATCH --job-name="test-few-shot"
 
 # The project ID which this job should run under:
 #SBATCH --account="punim2247"
@@ -16,7 +18,7 @@
 #SBATCH --cpus-per-task=8
 
 # Number of GPUs requested per node:
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:1
 # Slurm QoS:
 #SBATCH --qos=gpgpudeeplearn
 #SBATCH --constraint=dlg5
@@ -35,10 +37,11 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=0-1:0:00
+#SBATCH --time=0-12:0:00
 
 # Standard output and error log
-#SBATCH -o logs/test-few-shot-codereview.log
+#SBATCH -o logs/test-few-shot-%N.%j.out # STDOUT
+#SBATCH -e logs/test-few-shot-%N.%j.err # STDERR
 
 # Run the job from the directory where it was launched (default)
 
@@ -59,25 +62,15 @@ echo "$(module list)"
 # The job command(s):
 source ~/venvs/codellama/bin/activate
 
-python3 -m torch.distributed.launch --nproc_per_node 2 code_review_instructions_few_shot.py \
-    --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
-    --conf_path ../config/codellama-few-shot-test.json \
+torchrun --nproc_per_node 1 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-7b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-7b-Instruct/tokenizer.model \
+    --conf_path ../config/codellama-test-few-shot.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 4096 \
     --max_batch_size 4 \
     --debug True
-
-# torchrun --nproc_per_node 2 example_completion.py \
-#     --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
-#     --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
-#     --max_seq_len 256 --max_batch_size 4
-
-# torchrun --nproc_per_node 2 example_instructions.py \
-#     --ckpt_dir ./ckpt/CodeLlama-13b-Instruct/ \
-#     --tokenizer_path ./ckpt/CodeLlama-13b-Instruct/tokenizer.model \
-#     --max_seq_len 512 --max_batch_size 4
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
 ##Job monitor command to list the resource usage

@@ -1,12 +1,12 @@
 #!/bin/bash
 # Partition for the job:
-#SBATCH --partition=gpu-h100
+#SBATCH --partition=deeplearn
 
 # Multithreaded (SMP) job: must run on one node 
 #SBATCH --nodes=1
 
 # The name of the job:
-#SBATCH --job-name="34b-instruct-codereview"
+#SBATCH --job-name="34b-instruct-zero-shot"
 
 # The project ID which this job should run under:
 #SBATCH --account="punim2247"
@@ -18,8 +18,8 @@
 # Number of GPUs requested per node:
 #SBATCH --gres=gpu:4
 # Slurm QoS:
-##SBATCH --qos=gpgpudeeplearn
-##SBATCH --constraint=dlg5
+#SBATCH --qos=gpgpudeeplearn
+#SBATCH --constraint=dlg5
 
 # Requested memory per node:
 #SBATCH --mem=100G
@@ -35,10 +35,11 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=24:0:00
+#SBATCH --time=0-24:0:00
 
 # Standard output and error log
-#SBATCH -o logs/34b-instruct-codereview.log
+#SBATCH -o logs/34b-instruct-zero-shot-%N.%j.out # STDOUT
+#SBATCH -e logs/34b-instruct-zero-shot-%N.%j.err # STDERR
 
 # Run the job from the directory where it was launched (default)
 
@@ -59,10 +60,20 @@ echo "$(module list)"
 # The job command(s):
 source ~/venvs/codellama/bin/activate
 
-torchrun --nproc_per_node 4 code_review_instructions_few_shot.py \
+torchrun --nproc_per_node 4 code_review_instructions.py \
     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/codellama-few-shot-34b-instruct-codereview.json \
+    --conf_path ../config/zero-shot/codellama-34b-instruct-cr.json \
+    --temperature 0.0 \
+    --top_p 0.95 \
+    --max_seq_len 4096 \
+    --max_batch_size 10 \
+    --debug True
+
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/zero-shot/codellama-34b-instruct-crn.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 4096 \

@@ -1,13 +1,10 @@
 import json
 import math
 import os
-import re
-from typing import Optional
 
 import fire
 import pandas as pd
 import torch
-from evaluation import myeval
 from llama import Llama
 from tqdm import tqdm
 
@@ -27,72 +24,13 @@ class Config:
             setattr(self, key, value)
 
 
-def remove_minus(code):
-    """
-    Remove the minus sign from the beginning of each line in the code.
-    """
-    return "\n".join([line[1:] for line in code.split("\n")])
-
-
-def remove_plus(code):
-    """
-    Remove the plus sign from the beginning of each line in the code.
-    """
-    return "\n".join(
-        [line[1:].strip() for line in code.split("\n") if line.strip() != ""]
-    )
-
-
-def create_prompt(comment, code_diff):
-    remove_minus_code_diff = remove_minus(code_diff)
-    user_prompt = f"""
-    As a developer, imagine you've submitted a pull request and your team leader
-    requests you to make a change to a piece of code. The old code being
-    referred to in the hunk of code changes is:
-    ```
-    {remove_minus_code_diff}
-    ```
-    There is the code review for this code:
-    {comment}
-    Please generate the revised code according to the review
-    """
-    return user_prompt
-
-
-def get_user_prompts(in_path):
-    df = pd.read_json(path_or_buf=in_path, lines=True)
-    df["user_prompt"] = df.apply(lambda x: create_prompt(x.review, x.old), axis=1)
-    return df
-
-
-def extract_code_diff(text):
-    """
-    Extract code diff from text. Code is assumed to be in the format:
-    ```lang
-    code
-    ```
-    where lang is the language of the code.
-    """
-
-    code = re.findall(r"```[A-Za-z]*\n(.*?)\n```", text, re.DOTALL)
-    if code:
-        return code[0]
-    return "NO CODE"
-
-
-def evaluate_code_diff(actual_code, refined_code):
-    remove_plus_code_diff = remove_plus(actual_code)
-    em, em_trim, _, _, bleu, bleu_trim = myeval(remove_plus_code_diff, refined_code)
-    return em, em_trim, bleu, bleu_trim
-
-
 def save_output(cfg, df):
     dataset_name = os.path.splitext(os.path.basename(cfg.in_path))[0]
     output_dir = f"{cfg.out_dir}/{cfg.model}"
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    output_path = f"{cfg.out_dir}/{cfg.model}/{dataset_name}_output.jsonl"
+    output_path = f"{cfg.out_dir}/{cfg.model}/{dataset_name}.jsonl"
 
     df.to_json(output_path, orient="records", lines=True)
     return output_path
@@ -140,7 +78,7 @@ def main(
         max_batch_size=max_batch_size,
     )
 
-    df = get_user_prompts(cfg.in_path)
+    df = pd.read_json(path_or_buf=cfg.in_path, lines=True)
 
     if debug:
         print(f"Prompts: {len(df.index)}")
@@ -165,22 +103,9 @@ def main(
 
         for result in results:
             answer = result["generation"]["content"]
-            code = extract_code_diff(answer)
-            outputs.append([answer, code])
+            outputs.append(answer)
 
-    processed_df = pd.DataFrame(outputs, columns=["codellama_answer", "codellama_code"])
-    df = pd.concat([df, processed_df], axis=1)
-    (
-        df["codellama_em"],
-        df["codellama_em_trim"],
-        df["codellama_bleu"],
-        df["codellama_bleu_trim"],
-    ) = zip(
-        *df.apply(
-            lambda row: evaluate_code_diff(row["new"], row["codellama_code"]),
-            axis=1,
-        )
-    )
+    df["codellama_answer"] = outputs
 
     output_path = save_output(cfg, df)
     print(f"Output saved to {output_path}")
