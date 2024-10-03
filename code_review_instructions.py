@@ -59,6 +59,7 @@ def main(
     max_seq_len: int = 2048,
     max_batch_size: int = 4,
     max_gen_len: int = None,
+    max_prompt_length: int = 8000,
     debug: bool = False,
 ):
     cfg = Config(conf_path)
@@ -83,8 +84,12 @@ def main(
     if debug:
         print(f"Prompts: {len(df.index)}")
 
+    filtered_df = df[df["user_prompt_length"] <= max_prompt_length]
+    if debug:
+        print(f"Filtered Prompts by max {max_prompt_length} length: {len(filtered_df.index)} / {len(df.index)}")
+
     outputs = []
-    chunks = split_dataframe(df.user_prompt, chunk_size=max_batch_size)
+    chunks = split_dataframe(filtered_df.user_prompt, chunk_size=max_batch_size)
     for chunk in tqdm(chunks, total=len(chunks), desc="Prompting"):
         instructions = [
             [
@@ -105,9 +110,9 @@ def main(
             answer = result["generation"]["content"]
             outputs.append(answer)
 
-    df["codellama_answer"] = outputs
+    filtered_df["codellama_answer"] = outputs
 
-    output_path = save_output(cfg, df)
+    output_path = save_output(cfg, filtered_df)
     print(f"Output saved to {output_path}")
 
 
