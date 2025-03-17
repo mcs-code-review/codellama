@@ -36,7 +36,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=6-00:0:00
+#SBATCH --time=1-00:0:00
 
 # Standard output and error log
 #SBATCH -o logs/34b-instruct-few-shot-%N.%j.out # STDOUT
@@ -125,6 +125,38 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --max_batch_size 10 \
     --debug True
 
+### CodeReviewer DL ###
+
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/few-shot-dl/codellama-34b-instruct-cr-faiss-1.json \
+    --temperature 0.0 \
+    --top_p 0.95 \
+    --max_seq_len 8192 \
+    --max_batch_size 10 \
+    --debug True
+
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/few-shot-dl/codellama-34b-instruct-cr-faiss-2.json \
+    --temperature 0.0 \
+    --top_p 0.95 \
+    --max_seq_len 8192 \
+    --max_batch_size 10 \
+    --debug True
+
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/few-shot-dl/codellama-34b-instruct-cr-faiss-3.json \
+    --temperature 0.0 \
+    --top_p 0.95 \
+    --max_seq_len 8192 \
+    --max_batch_size 10 \
+    --debug True
+
 ### CodeReviewerNew ###
 
 torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -183,6 +215,38 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
     --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-crn-pkg_rso_bm25-3.json \
+    --temperature 0.0 \
+    --top_p 0.95 \
+    --max_seq_len 8192 \
+    --max_batch_size 10 \
+    --debug True
+
+### CodeReviewer DL ###
+
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/few-shot-dl/codellama-34b-instruct-crn-faiss-1.json \
+    --temperature 0.0 \
+    --top_p 0.95 \
+    --max_seq_len 8192 \
+    --max_batch_size 10 \
+    --debug True
+
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/few-shot-dl/codellama-34b-instruct-crn-faiss-2.json \
+    --temperature 0.0 \
+    --top_p 0.95 \
+    --max_seq_len 8192 \
+    --max_batch_size 10 \
+    --debug True
+
+torchrun --nproc_per_node 4 code_review_instructions.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+    --conf_path ../config/few-shot-dl/codellama-34b-instruct-crn-faiss-3.json \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 8192 \
