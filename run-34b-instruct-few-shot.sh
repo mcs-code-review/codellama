@@ -63,67 +63,67 @@ source ~/venvs/codellama/bin/activate
 
 ### CodeReviewer ###
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-1.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-1.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-2.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-2.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-3.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-3.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-4.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-cr-bm25-4.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
 ### CodeReviewer with Ownership ###
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-cr-pkg_aco_bm25-3.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 8192 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-cr-pkg_aco_bm25-3.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 8192 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-cr-pkg_rso_bm25-3.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 8192 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-cr-pkg_rso_bm25-3.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 8192 \
+#     --max_batch_size 10 \
+#     --debug True
 
 ### CodeReviewer DL ###
 
@@ -159,67 +159,67 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
 
 ### CodeReviewerNew ###
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-1.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-1.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-2.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-2.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-3.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-3.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-4.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot/codellama-34b-instruct-crn-bm25-4.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
 
 ### CodeReviewerNew with Ownership ###
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-crn-pkg_aco_bm25-3.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 8192 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-crn-pkg_aco_bm25-3.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 8192 \
+#     --max_batch_size 10 \
+#     --debug True
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
-    --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-crn-pkg_rso_bm25-3.json \
-    --temperature 0.0 \
-    --top_p 0.95 \
-    --max_seq_len 8192 \
-    --max_batch_size 10 \
-    --debug True
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/few-shot-with-ownership/codellama-34b-instruct-crn-pkg_rso_bm25-3.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 8192 \
+#     --max_batch_size 10 \
+#     --debug True
 
 ### CodeReviewer DL ###
 
