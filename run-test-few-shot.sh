@@ -37,7 +37,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=0-12:0:00
+#SBATCH --time=0-1:0:00
 
 # Standard output and error log
 #SBATCH -o logs/test-few-shot-%N.%j.out # STDOUT
@@ -69,7 +69,7 @@ torchrun --nproc_per_node 1 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 4096 \
-    --max_batch_size 4 \
+    --max_batch_size 2 \
     --debug True
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##

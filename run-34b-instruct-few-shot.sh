@@ -1,7 +1,7 @@
 #!/bin/bash
 # Partition for the job:
 #SBATCH --partition=deeplearn
-##SBATCH --partition=gpu-h100
+##SBATCH --partition=gpu-a100
 
 # Multithreaded (SMP) job: must run on one node 
 #SBATCH --nodes=1
@@ -36,7 +36,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=1-00:0:00
+#SBATCH --time=0-12:0:00
 
 # Standard output and error log
 #SBATCH -o logs/34b-instruct-few-shot-%N.%j.out # STDOUT
@@ -70,7 +70,7 @@ source ~/venvs/codellama/bin/activate
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -80,7 +80,7 @@ source ~/venvs/codellama/bin/activate
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -90,7 +90,7 @@ source ~/venvs/codellama/bin/activate
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -100,7 +100,7 @@ source ~/venvs/codellama/bin/activate
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 ### CodeReviewer with Ownership ###
@@ -112,7 +112,7 @@ source ~/venvs/codellama/bin/activate
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 8192 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -122,7 +122,7 @@ source ~/venvs/codellama/bin/activate
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 8192 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 ### CodeReviewer DL ###
@@ -134,7 +134,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 8192 \
-    --max_batch_size 10 \
+    --max_batch_size 4 \
     --debug True
 
 torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -144,7 +144,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 8192 \
-    --max_batch_size 10 \
+    --max_batch_size 4 \
     --debug True
 
 torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -154,7 +154,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 8192 \
-    --max_batch_size 10 \
+    --max_batch_size 4 \
     --debug True
 
 ### CodeReviewerNew ###
@@ -166,7 +166,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -176,7 +176,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -186,7 +186,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -196,7 +196,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 4096 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 ### CodeReviewerNew with Ownership ###
@@ -208,7 +208,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 8192 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 # torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -218,7 +218,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
 #     --temperature 0.0 \
 #     --top_p 0.95 \
 #     --max_seq_len 8192 \
-#     --max_batch_size 10 \
+#     --max_batch_size 4 \
 #     --debug True
 
 ### CodeReviewer DL ###
@@ -230,7 +230,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 8192 \
-    --max_batch_size 10 \
+    --max_batch_size 4 \
     --debug True
 
 torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -240,7 +240,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 8192 \
-    --max_batch_size 10 \
+    --max_batch_size 4 \
     --debug True
 
 torchrun --nproc_per_node 4 code_review_instructions.py \
@@ -250,7 +250,7 @@ torchrun --nproc_per_node 4 code_review_instructions.py \
     --temperature 0.0 \
     --top_p 0.95 \
     --max_seq_len 8192 \
-    --max_batch_size 10 \
+    --max_batch_size 4 \
     --debug True
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
