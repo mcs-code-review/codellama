@@ -166,3 +166,5 @@ ckpt
 logs
 logs.archive
 wget-log
+
+meta-llama

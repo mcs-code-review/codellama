@@ -1,8 +1,7 @@
 #!/bin/bash
 # Partition for the job:
-##SBATCH --partition=gpu-a100-short
-##SBATCH --partition=gpu-a100
-#SBATCH --partition=deeplearn
+#SBATCH --partition=gpu-a100-short
+##SBATCH --partition=deeplearn
 
 # Multithreaded (SMP) job: must run on one node 
 #SBATCH --nodes=1
@@ -20,8 +19,8 @@
 # Number of GPUs requested per node:
 #SBATCH --gres=gpu:1
 # Slurm QoS:
-#SBATCH --qos=gpgpudeeplearn
-#SBATCH --constraint=dlg5
+##SBATCH --qos=gpgpudeeplearn
+##SBATCH --constraint=dlg5
 
 # Requested memory per node:
 ##SBATCH --mem=64G
@@ -62,14 +61,29 @@ echo "$(module list)"
 # The job command(s):
 source ~/venvs/codellama/bin/activate
 
-torchrun --nproc_per_node 1 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-7b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-7b-Instruct/tokenizer.model \
+export VLLM_WORKER_MULTIPROC_METHOD=spawn
+
+# torchrun --nproc_per_node 1 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-7b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-7b-Instruct/tokenizer.model \
+#     --conf_path ../config/codellama-test-few-shot.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 2 \
+#     --debug True
+
+
+### CodeReviewer ###
+
+python code_review_instruction_parallel.py \
+    --ckpt_dir ./ckpt/CodeLlama-7b-Instruct-hf \
+    --tokenizer_path ./ckpt/CodeLlama-7b-Instruct-hf \
     --conf_path ../config/codellama-test-few-shot.json \
     --temperature 0.0 \
     --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 2 \
+    --max_new_tokens 512 \
+    --tp_size 1 \
     --debug True
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##

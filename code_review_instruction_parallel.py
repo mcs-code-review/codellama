@@ -96,7 +96,7 @@ def main(
 
     answers = [output.outputs[0].text for output in outputs]
 
-    df["deepseek_answer"] = answers
+    df["codellama_answer"] = answers
 
     if debug:
         for output in outputs[:5]:
