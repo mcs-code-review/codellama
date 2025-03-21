@@ -178,7 +178,7 @@ python code_review_instruction_parallel.py \
     --tp_size 4 \
     --debug False
 
-python code_CodeReviewerNewreview_instruction_few_shot.py \
+python code_review_instruction_parallel.py \
     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
     --conf_path ../config/few-shot-ir/codellama-34b-instruct-crn-bm25-4.json \
