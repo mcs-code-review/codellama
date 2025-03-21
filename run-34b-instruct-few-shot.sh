@@ -35,7 +35,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=1-0:0:00
+#SBATCH --time=0-3:0:00
 
 # Standard output and error log
 #SBATCH -o logs/34b-instruct-few-shot-%N.%j.out # STDOUT
