@@ -64,41 +64,41 @@ export VLLM_WORKER_MULTIPROC_METHOD=spawn
 
 ### CodeReviewer IR ###
 
-python code_review_instruction_parallel.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
-    --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-1.json \
-    --temperature 0.0 --top_p 0.95 \
-    --max_new_tokens 2048 \
-    --tp_size 4 \
-    --debug False
+# python code_review_instruction_parallel.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-1.json \
+#     --temperature 0.0 --top_p 0.95 \
+#     --max_new_tokens 2048 \
+#     --tp_size 4 \
+#     --debug False
 
-python code_review_instruction_parallel.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
-    --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-2.json \
-    --temperature 0.0 --top_p 0.95 \
-    --max_new_tokens 2048 \
-    --tp_size 4 \
-    --debug False
+# python code_review_instruction_parallel.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-2.json \
+#     --temperature 0.0 --top_p 0.95 \
+#     --max_new_tokens 2048 \
+#     --tp_size 4 \
+#     --debug False
 
-python code_review_instruction_parallel.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
-    --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-3.json \
-    --temperature 0.0 --top_p 0.95 \
-    --max_new_tokens 2048 \
-    --tp_size 4 \
-    --debug False
+# python code_review_instruction_parallel.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-3.json \
+#     --temperature 0.0 --top_p 0.95 \
+#     --max_new_tokens 2048 \
+#     --tp_size 4 \
+#     --debug False
 
-python code_review_instruction_parallel.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
-    --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-4.json \
-    --temperature 0.0 --top_p 0.95 \
-    --max_new_tokens 2048 \
-    --tp_size 4 \
-    --debug False
+# python code_review_instruction_parallel.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --conf_path ../config/few-shot-ir/codellama-34b-instruct-cr-bm25-4.json \
+#     --temperature 0.0 --top_p 0.95 \
+#     --max_new_tokens 2048 \
+#     --tp_size 4 \
+#     --debug False
 
 ### CodeReviewer with Ownership IR ###
 
@@ -151,32 +151,32 @@ python code_review_instruction_parallel.py \
 
 # ### CodeReviewerNew IR ###
 
-python code_review_instruction_parallel.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
-    --conf_path ../config/few-shot-ir/codellama-34b-instruct-crn-bm25-1.json \
-    --temperature 0.0 --top_p 0.95 \
-    --max_new_tokens 2048 \
-    --tp_size 4 \
-    --debug False
+# python code_review_instruction_parallel.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --conf_path ../config/few-shot-ir/codellama-34b-instruct-crn-bm25-1.json \
+#     --temperature 0.0 --top_p 0.95 \
+#     --max_new_tokens 2048 \
+#     --tp_size 4 \
+#     --debug False
 
-python code_review_instruction_parallel.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
-    --conf_path ../config/few-shot-ir/codellama-34b-instruct-crn-bm25-2.json \
-    --temperature 0.0 --top_p 0.95 \
-    --max_new_tokens 2048 \
-    --tp_size 4 \
-    --debug False
+# python code_review_instruction_parallel.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --conf_path ../config/few-shot-ir/codellama-34b-instruct-crn-bm25-2.json \
+#     --temperature 0.0 --top_p 0.95 \
+#     --max_new_tokens 2048 \
+#     --tp_size 4 \
+#     --debug False
 
-python code_review_instruction_parallel.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
-    --conf_path ../config/few-shot-ir/codellama-34b-instruct-crn-bm25-3.json \
-    --temperature 0.0 --top_p 0.95 \
-    --max_new_tokens 2048 \
-    --tp_size 4 \
-    --debug False
+# python code_review_instruction_parallel.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
+#     --conf_path ../config/few-shot-ir/codellama-34b-instruct-crn-bm25-3.json \
+#     --temperature 0.0 --top_p 0.95 \
+#     --max_new_tokens 2048 \
+#     --tp_size 4 \
+#     --debug False
 
 python code_review_instruction_parallel.py \
     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
