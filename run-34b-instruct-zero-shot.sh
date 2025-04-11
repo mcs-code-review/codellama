@@ -35,7 +35,7 @@
 #SBATCH --mail-type=END
 
 # The maximum running time of the job in days-hours:mins:sec
-#SBATCH --time=0-48:0:00
+#SBATCH --time=0-6:0:00
 
 # Standard output and error log
 #SBATCH -o logs/34b-instruct-zero-shot-%N.%j.out # STDOUT
@@ -60,25 +60,47 @@ echo "$(module list)"
 # The job command(s):
 source ~/venvs/codellama/bin/activate
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+export VLLM_WORKER_MULTIPROC_METHOD=spawn
+
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/zero-shot/codellama-34b-instruct-cr.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
+
+# torchrun --nproc_per_node 4 code_review_instructions.py \
+#     --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
+#     --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+#     --conf_path ../config/zero-shot/codellama-34b-instruct-crn.json \
+#     --temperature 0.0 \
+#     --top_p 0.95 \
+#     --max_seq_len 4096 \
+#     --max_batch_size 10 \
+#     --debug True
+
+python code_review_instruction_parallel.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
     --conf_path ../config/zero-shot/codellama-34b-instruct-cr.json \
     --temperature 0.0 \
     --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+    --max_new_tokens 2048 \
+    --tp_size 4 \
+    --debug False
 
-torchrun --nproc_per_node 4 code_review_instructions.py \
-    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct/ \
-    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct/tokenizer.model \
+python code_review_instruction_parallel.py \
+    --ckpt_dir ./ckpt/CodeLlama-34b-Instruct-hf \
+    --tokenizer_path ./ckpt/CodeLlama-34b-Instruct-hf \
     --conf_path ../config/zero-shot/codellama-34b-instruct-crn.json \
     --temperature 0.0 \
     --top_p 0.95 \
-    --max_seq_len 4096 \
-    --max_batch_size 10 \
-    --debug True
+    --max_new_tokens 2048 \
+    --tp_size 4 \
+    --debug False
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
 ##Job monitor command to list the resource usage
